@@ -1,0 +1,10 @@
+>change the query result to 
+if ($result && mysqli_num_rows($result)>0) {
+    return $result;
+}
+else{
+
+    return false;
+}
+
+>add else to every list page to show table is empty
