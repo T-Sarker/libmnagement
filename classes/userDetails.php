@@ -164,14 +164,14 @@ class UserLogin{
 			return $fieldError;
 
 		} else {
-			if ($type=='teacher') {
+			if ($type=='Teacher') {
 				
 				$designation = $this->fm->validator($post['designation']);
 				$designation= mysqli_real_escape_string($this->db->link,$designation);
 
 				$query = "INSERT INTO tbl_teacher(name, username, department, designation, cardImage, validDate, address, phone, email, image, password, status) VALUES ('$name', '$username', '$department', '$designation', '$uploadPath', '$validationdate', '$address', '$phone', '$email', '$uploadPath2', '$password', 0)";
 
-			} elseif ($type=='student') {
+			} elseif ($type=='Student') {
 				
 				$batchno = $this->fm->validator($post['batchno']);
 				$batchno= mysqli_real_escape_string($this->db->link,$batchno);
