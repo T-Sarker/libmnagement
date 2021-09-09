@@ -42,7 +42,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="returnstatus.html" aria-current="page"><i
+                <a class="nav-link" href="returnstatus.php" aria-current="page"><i
                         class="fas fa-book-open"></i><span>Return Status</span></a>
             </li>
             <li class="nav-item">

@@ -2,7 +2,7 @@
     include "lib/session.php";
     Session::init();
 
-    
+    date_default_timezone_set('Asia/Dhaka');
 
     if (isset($_GET['logout'])) {
       if ($_GET['logout']=='logout') {

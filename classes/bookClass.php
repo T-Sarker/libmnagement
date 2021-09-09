@@ -321,5 +321,196 @@ class BookClasses{
 
             }
         }
+
+        public function getAllRequestedBooks(){
+
+            $query = "SELECT * FROM tbl_borrow WHERE status=0";
+
+            $result = $this->db->select($query);
+
+            if ($result) {
+                return $result;
+            }
+            else{
+
+                return false;
+
+            }
+        }
+
+
+        public function getAllAccepteddBooks(){
+
+            $query = "SELECT * FROM tbl_borrow WHERE status=1";
+
+            $result = $this->db->select($query);
+
+            if ($result) {
+                return $result;
+            }
+            else{
+
+                return false;
+
+            }
+        }
+
+        public function getAllRequestedUserDetails($id,$type){
+
+            if ($type=='Student') {
+                $query = "SELECT * FROM tbl_student WHERE id='$id'";
+            } elseif ($type=='Teacher') {
+                $query = "SELECT * FROM tbl_teacher WHERE id='$id'";
+            }
+
+            $result = $this->db->select($query);
+
+            if (mysqli_num_rows($result)==0) {
+                return false;
+            }elseif($result){
+                return $result;
+            }
+            else{
+
+                $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+                return $fieldError;
+
+            }
+        }
+
+        public function getAllRequestedBooksDetails($id){
+
+            
+            $query = "SELECT * FROM tbl_book WHERE id='$id'";
+            $result = $this->db->select($query);
+
+            if ($result) {
+                return $result;
+            }
+            else{
+
+                $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+                return $fieldError;
+
+            }
+        }
+
+        public function updateTheBorrowRequest($id,$days,$type){
+
+            $date =  date("Y/m/d");
+            $query = "UPDATE tbl_borrow SET borrowDate='$date', forDays='$days', status=1 WHERE userId='$id' AND userType='$type'";
+            $result = $this->db->update($query);
+
+            if ($result) {
+                echo "<script>window.location.href = 'reqbooklist.php';</script>";
+            }
+            else{
+
+                $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+                return $fieldError;
+
+            }
+        }
+
+        public function acceptReturnedReqBooks($id){
+
+            $date =  date("Y/m/d");
+            $query = "UPDATE tbl_borrow SET status=3 WHERE id='$id'";
+            $result = $this->db->update($query);
+
+            if ($result) {
+                echo "<script>window.location.href = 'returnbooklist.php';</script>";
+            }
+            else{
+
+                $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+                return $fieldError;
+
+            }
+        }
+
+
+
+        
+
+    public function borrowedBooks($id,$type){
+        
+        $query = "SELECT * FROM tbl_borrow WHERE userId='$id' AND userType='$type' AND status=1";
+        $result = $this->db->select($query);
+
+        if (mysqli_num_rows($result)==0) {
+            return false;
+        }elseif(mysqli_num_rows($result)>0){
+            return $result;
+        }
+        else{
+
+            $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+            return $fieldError;
+
+        }
+    }   
+
+    public function getAllReturnedReqBooks(){
+        
+        $query = "SELECT * FROM tbl_borrow WHERE status=2";
+        $result = $this->db->select($query);
+
+        if (mysqli_num_rows($result)==0) {
+            return false;
+        }elseif(mysqli_num_rows($result)>0){
+            return $result;
+        }
+        else{
+
+            $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+            return $fieldError;
+
+        }
     }
+
+
+    public function getAllReturnedBooks(){
+        
+        $query = "SELECT * FROM tbl_borrow WHERE status=3";
+        $result = $this->db->select($query);
+
+        if ( mysqli_num_rows($result)==0) {
+            return false;
+        }elseif(mysqli_num_rows($result)>0){
+            return $result;
+        }
+        else{
+
+            $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+            return $fieldError;
+
+        }
+    }
+
+    public function returnBook($borrowId,$uid,$type){
+        $query = "UPDATE tbl_borrow SET status=2 WHERE id='$borrowId' AND userId='$uid' AND userType='$type'";
+        $result = $this->db->update($query);
+
+        if($result){
+
+            echo "<script>window.location.href = 'returnstatus.php';</script>";
+        }
+        else{
+
+            $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+            return $fieldError;
+
+        }
+
+    }
+}
 ?>

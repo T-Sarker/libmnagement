@@ -31,17 +31,17 @@ class UserLogin{
 
 		if ($email=='' && $pass=='') {
 
-			$showError = "Fields can not be empty!";
+			$showError = "<span style='color:red;text-align: center;display: block;'>Fields can not be empty!</span>";
 			return $showError;
   
 		}else if( $email!='' && $pass==''){
 
-			$showError = "Password can not be empty!";
+			$showError = "<span style='color:red;text-align: center;display: block;'>Password can not be empty!</span>";
 			return $showError;
 
 		}else if($email=='' && $pass!=''){
 			
-			$showError = "Email can not be empty!";
+			$showError = "<span style='color:red;text-align: center;display: block;'>Email can not be empty!</span>";
 			return $showError;
 		}
 
@@ -51,12 +51,12 @@ class UserLogin{
 		// $pass = md5($pass);
 
 		if ($type=='Student') {
-			$query = "SELECT * FROM tbl_student WHERE email='$email' AND password='$pass'";
+			$query = "SELECT * FROM tbl_student WHERE email='$email' AND password='$pass' AND status=1";
 		} elseif ($type=='Teacher') {
-			$query = "SELECT * FROM tbl_teacher WHERE email='$email' AND password='$pass'";
+			$query = "SELECT * FROM tbl_teacher WHERE email='$email' AND password='$pass' AND status=1";
 		}
 		else {
-			$showError = "Some Error Occured!";
+			$showError = "<span style='color:red;text-align: center;display: block;'>Some Error Occured!</span>";
 			return $showError;
 		}
 		
@@ -89,7 +89,7 @@ class UserLogin{
 		}
 		else {
 
-			$showError = "Username or password is wrong!";
+			$showError = "<span style='color:red;text-align: center;display: block;'>User Permission Denied!</span>";
 
 			return $showError;
 		}
@@ -226,7 +226,27 @@ class UserLogin{
 
 		$type = $this->fm->validator($type);
 		$type= mysqli_real_escape_string($this->db->link,$type);
+
+		if ($type=='Student') {
+			$query = "SELECT * FROM tbl_student WHERE email='$email' AND password='$pass' AND status=1";
+		} elseif ($type=='Teacher') {
+			$query = "SELECT * FROM tbl_teacher WHERE email='$email' AND password='$pass' AND status=1";
+		}
+		else {
+			$showError = "<span style='color:red;text-align: center;display: block;'>Some Error Occured!</span>";
+			return $showError;
+		}
+
+		$result = $this->db->select($query);
+		
+		if ($result!=false) {
+			return $result;
+		}else{
+			$showError = "<span style='color:red;text-align: center;display: block;'>Some Error Occured!</span>";
+			return $showError;
+		}
 	}
+
 }
 
 ?>

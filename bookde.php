@@ -1,68 +1,30 @@
 <?php include "./inc/header.php" ?>
 <?php
   include "./classes/bookClass.php";
+  include "./classes/borrowClass.php";
   $bk = new BookClasses();
-  $getBooks = $bk->editBookIntoDB($_GET['id']);
+  $bb = new BorrowClass();
+
+
+  if (isset($_GET['id'])) {
+    $getBooks = $bk->editBookIntoDB($_GET['id']);
+  }
+  
+
+
+  if (isset($_GET['book']) && isset($_GET['user']) && isset($_GET['bname'])) {
+      echo $bookId =$_GET['book'];
+      echo $userId =$_GET['user'];
+      echo $bookName =$_GET['bname'];
+      echo $type =Session::get('Utype');
+
+
+      $borrowBook = $bb->borrowBook($bookId,$userId,$bookName,$type);
+  }
 ?>
 
  
-<div class="sidebar">
-  <div class="sidebar-brand">
-    <div class="profilehere" onclick="location.href='profile.php';">
-      <img src="<?php echo Session::get('Uimage') ?>" alt="<?php echo Session::get('Uuser') ?>">
 
-    </div>
-    <div class="namepart">
-      <div class="sidename"><?php echo Session::get('Uuser') ?></div>
-      <div class="sideusername"><?php echo "@".Session::get('Uname') ?></div>
-    </div>
-  </div>
-  <div class="sidebarmenu">
-    <ul class="nav" id="nav_accordion">
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-book"></i><span>My List</span><i
-            class="fas fa-chevron-down ms-3 fa-xs"></i></a>
-        <ul class="submenu collapse">
-          <!-- <li><a class="nav-link" href="allitem.html">All Item</a></li> -->
-          <li><a class="nav-link" href="booklist.php">All Books</a></li>
-          <li><a class="nav-link" href="wishlist.html">Wishlist</a></li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Manage Book</span><i
-            class="fas fa-chevron-down ms-3 fa-xs"></i></a>
-        <ul class="submenu collapse">
-          <li><a class="nav-link" href="addbook.php">Add Book</a></li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><i class="bi bi-book-half"></i><span>Issue Status</span><i
-            class="fas fa-chevron-down ms-3 fa-xs"></i></a>
-        <ul class="submenu collapse">
-          <li><a class="nav-link" href="issued.html">Issued</a></li>
-          <li><a class="nav-link" href="borrowed.html">Borrowed</a></li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="returnstatus.html" aria-current="page"><i class="fas fa-book-open"></i><span>Return
-            Status</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="requestbook.html" aria-current="page"><i class="bi bi-journals"></i><span>Request
-            Book</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="message.html" aria-current="page"><i
-            class="fas fa-envelope"></i><span>Message</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="editprofile.html" aria-current="page"><i class="fas fa-bars"></i><span>Edit
-            Profile</span></a>
-      </li>
-    </ul>
-
-  </div>
-</div>
 <div class="dashboadheader">
   <div class="dashnav">
     <div class="dashplace">
@@ -72,13 +34,26 @@
       Profile
     </div>
   </div>
-  <a class="nav-link" href="home.html"><i class="fas fa-home"></i> Home</a>
+  <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
 </div>
 
 <main>
   <div class="container-fluid allitem" id="maindash">
   <div class="table-responsive scroll">
-  <?php
+  <?php        
+          if (isset($borrowBook)) {
+            if ($borrowBook==false) {
+              echo "<script>alert('Book Already Borroed or Requested')</script>";
+              echo "<script>javascript:history.go(-1)</script>";
+
+            }elseif ($borrowBook==true) {
+              echo "<script>alert('Book Borrow request Sent Successfully')</script>";
+              echo "<script>javascript:history.go(-1)</script>";
+            }else {
+              echo $borrowBook;
+            }
+          }
+
           if (isset($getBooks)) {
             while ($book = $getBooks->fetch_assoc()) {
         ?>
@@ -92,7 +67,18 @@
               by <span class="byauthor"><?php echo $book['author'] ?></span></div>
             <div class="hereparts">
               <p class="oritype"><span><i class="fas fa-book-open"></i></span> <?php echo $book['type'] ?></p>
-              <a href="#" class="btn previewbtn" tabindex="-1" role="button" aria-disabled="true">Preview</a>
+              <?php
+                if (Session::get('Ulogin')==true) {
+                  
+              ?>
+              <a href="?book=<?php echo $book['id'] ?>&&user=<?php echo Session::get('Uid') ?>&&bname=<?php echo $book['title'] ?>" class="btn previewbtn" tabindex="-1" role="button" aria-disabled="true">Borrow This Book</a>
+              <?php
+                }else{
+              ?>
+              <a href='' class="btn previewbtn" disabled>Login To Borrow This Book</a>
+              <?php
+                }
+              ?>
             </div>
 
             <!-- E-bbok describ  -->
