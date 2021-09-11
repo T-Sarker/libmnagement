@@ -25,37 +25,37 @@
 
     <div class="sidebarmenu">
         <ul class="nav" id="nav_accordion">
+        <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Resource List</span><i
+            class="fas fa-chevron-down ms-3 fa-xs"></i></a>
+        <ul class="submenu collapse">
+          <li><a class="nav-link" href="allbook.php">Book</a></li>
+          <li><a class="nav-link" href="allebook.php">Ebook</a></li>
+          <li><a class="nav-link" href="alljournal.php">Journal</a></li>
+          <li><a class="nav-link" href="allthesis.php">Thesis</a></li>
+          <li><a class="nav-link" href="allassignment.php">Assignment</a></li>
+          <li><a class="nav-link" href="allreport.php">Report</a></li>
+          <li><a class="nav-link" href="allvideos.php">Videos</a></li>
+          <li><a class="nav-link" href="/">Gallery</a></li>
+          <li><a class="nav-link" href="/">CD/DVD</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="profile.php" aria-current="page"><i class="fas fa-bars"></i><span>Profile</span></a>
+      </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-list"></i><span>My List</span><i
-                        class="fas fa-chevron-down ms-3 fa-xs"></i></a>
-                <ul class="submenu collapse">
-                    <li><a class="nav-link" href="allitem.html">All Item</a></li>
-                    <li><a class="nav-link" href="wishlist.html">Wishlist</a></li>
-                </ul>
+                <a class="nav-link" href="returnstatus.php" aria-current="page"><i class="fas fa-book-open"></i><span>All Request</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="issuelist.php" aria-current="page"><i class="bi bi-journals"></i><span>Issued Book</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-book-half"></i><span>Issue Status</span><i
-                        class="fas fa-chevron-down ms-3 fa-xs"></i></a>
-                <ul class="submenu collapse">
-                    <li><a class="nav-link" href="issued.html">Issued</a></li>
-                    <li><a class="nav-link" href="borrowed.html">Borrowed</a></li>
-                </ul>
+                <a class="nav-link" href="allhistory.php" aria-current="page"><i class="bi bi-journals"></i><span>All Records</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="returnstatus.php" aria-current="page"><i
-                        class="fas fa-book-open"></i><span>Return Status</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="requestbook.html" aria-current="page"><i
-                        class="bi bi-journals"></i><span>Request Book</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="message.html" aria-current="page"><i
-                        class="fas fa-envelope"></i><span>Message</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="editprofile.html" aria-current="page"><i class="fas fa-bars"></i><span>Edit
-                        Profile</span></a>
+                <a class="nav-link" href="allmessage.php" aria-current="page"><i class="fas fa-envelope"></i><span>Message</span></a>
             </li>
         </ul>
 

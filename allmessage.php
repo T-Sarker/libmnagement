@@ -1,21 +1,28 @@
+<?php include "./inc/header.php" ?>
 <?php
-  include "./classes/profileClass.php";
-  $bk = new UserProfile();
-  $id = Session::get('Uid');
-  $type = Session::get('Utype');
-  $userResult = $bk->userProfile($id,$type);
-?>
-<?php
-    if (isset($userResult)) {
+    include "./classes/messageClass.php";
+    $bk = new MessageClasses();
+    $type =Session::get('Utype');
+    $id =Session::get('Uid');
+    $getMessages = $bk->getAllmessage($id);
+
+    if (isset($_POST['sendMessage']) && $_POST['msg'] !=null) {
+        echo $msg = $_POST['msg'];
+        echo $to = 0;
+        echo $from = $id;
+        echo $parentId = $_POST['parentId'];
         
-        while ($user = $userResult->fetch_assoc()) {
-            
+
+        echo $insertMsg = $bk->insertMessage($to,$from,$msg,$parentId);
+    }
+
 ?>
+
 <div class="sidebar">
   <div class="sidebar-brand">
     <div class="profilehere" onclick="location.href='profile.php';">
       <img src="<?php echo Session::get('Uimage') ?>" alt="<?php echo Session::get('Uuser') ?>">
-      
+
     </div>
     <div class="namepart">
       <div class="sidename"><?php echo Session::get('Uuser') ?></div>
@@ -24,7 +31,7 @@
   </div>
   <div class="sidebarmenu">
     <ul class="nav" id="nav_accordion">
-    <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Resource List</span><i
             class="fas fa-chevron-down ms-3 fa-xs"></i></a>
         <ul class="submenu collapse">
@@ -42,6 +49,10 @@
       <li class="nav-item">
         <a class="nav-link" href="profile.php" aria-current="page"><i class="fas fa-bars"></i><span>Profile</span></a>
       </li>
+      <?php
+        if (Session::get('Utype')=='Teacher') {
+          
+      ?>
       <li class="nav-item">
         <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Manage Book</span><i
             class="fas fa-chevron-down ms-3 fa-xs"></i></a>
@@ -49,9 +60,14 @@
           <li><a class="nav-link" href="addbook.php">Add Book</a></li>
         </ul>
       </li>
+      <?php
+          
+        }
+      ?>
       <li class="nav-item">
         <a class="nav-link" href="returnstatus.php" aria-current="page"><i class="fas fa-book-open"></i><span>All Request</span></a>
       </li>
+
       <li class="nav-item">
         <a class="nav-link" href="allhistory.php" aria-current="page"><i class="bi bi-journals"></i><span>All History</span></a>
       </li>
@@ -63,7 +79,7 @@
       <li class="nav-item">
         <a class="nav-link" href="allmessage.php" aria-current="page"><i class="fas fa-envelope"></i><span>Message</span></a>
       </li>
-      
+
     </ul>
 
   </div>
@@ -74,7 +90,7 @@
       <label for="nav-toggle">
         <span class="fas fa-bars"></span>
       </label>
-      Profile
+      Return Status
     </div>
   </div>
   <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
@@ -83,60 +99,59 @@
 <main>
   <div class="container-fluid allitem" id="maindash">
 
-    <div class="accountinfo">
-      <div class="accountimg">
-        <img src="<?php echo $user['cardImage'] ?>" alt="Profile">
-      </div>
+    <!-- Message Open Section Start -->
 
-      <div class="activestatus">
-        <div class="info">Account Info</div>
-        <div class="status">Account Status - <?php echo $user['status']==0? '<span class="activeprofile">Active</span>':'<span class="badge badge-danger">Blocked</span>' ?></div>
-      </div>
+    <h3 class="start">Start Conversation</h3>
+    <div class="texthereall">
+      <ul>
+        <?php
+          if (isset($getMessages) && $getMessages!=false) {
+            while ($msg = $getMessages->fetch_assoc()) {
+              $GLOBALS['z']=$msg['id'];
+        ?>
+                  <li class="openmessagetake" style="padding:10px;margin-bottom:5px;">
+                    <p><?php echo $msg['message'] ?></p>
+                    <span style="font-size:12px;color: #3d3d3c7d;"><?php echo $msg['timeStamp'] ?></span>
+                  </li>
+        <?php
+
+                $mid = $msg['id'];
+                $getSubmsg = $bk->getAllSubmessage($id,$mid);
+                if ($getSubmsg && $getSubmsg!=false) {
+                  while ($submsg = $getSubmsg->fetch_assoc()) {
+        ?>
+                <li class="openmessagetake" style="background:#c3c1c1;text-align:right;padding:10px;margin-bottom:5px;">
+                  <p><?php echo $submsg['message'] ?></p>
+                  <span style="font-size:12px;color: #3d3d3c7d;"><?php echo $submsg['timeStamp'] ?></span>
+                </li>
+
+        <?php
+              }
+            }
+            
+        ?>
+          
+      </ul>
     </div>
-    <table class="table table-hover">
-    
-    <tbody>
-      <tr style="padding:20px;">
-        <td>Name:</td>
-        <td><?php echo $user['name'] ?></td>
-      </tr>
-      <tr style="padding:20px;">
-        <td>Username:</td>
-        <td><?php echo $user['username'] ?></td>
-      </tr>
-      <tr style="padding:20px;">
-        <td>Email:</td>
-        <td><?php echo $user['email'] ?></td>
-      </tr>
-      <tr style="padding:20px;">
-        <td>Department:</td>
-        <td><?php echo $user['department'] ?></td>
-      </tr>
-      <tr style="padding:20px;">
-        <td>Designation:</td>
-        <td><?php echo $user['designation'] ?></td>
-      </tr>
-      <tr style="padding:20px;">
-        <td>Phone:</td>
-        <td><?php echo $user['phone'] ?></td>
-      </tr>
-      <tr style="padding:20px;">
-        <td>Address:</td>
-        <td><?php echo $user['address'] ?></td>
-      </tr>
-      <tr style="padding:20px;">
-        <td>Status:</td>
-        <td><?php echo $user['status']==0? '<span class="activeprofile">Active</span>':'<span class="badge badge-danger">Blocked</span>' ?></td>
-      </tr>
-      
-    </tbody>
-  </table>
+    <?php
+                      }
+                    }
+                  ?>
+
+    <div class="typesend">
+      <form action="" method="POST">
+        <div class="input-group">
+          <input type="hidden" name="parentId" value="<?php echo $z ?>">
+          <input type="text" class="form-control type" style="height:50px;" placeholder="Type Message..." name="msg" aria-label="Type Message..."
+            aria-describedby="addon-wrapping">
+          <button type="submit" name="sendMessage" class="input-group-text send" id="addon-wrapping"><i class="fas fa-paper-plane"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Message Open Section End -->
 
   </div>
 </main>
-<?php
-        }
-    }else {
-        echo $userResult; 
-    }
-?>
+<?php include "./inc/footer.php" ?>

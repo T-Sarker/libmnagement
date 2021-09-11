@@ -338,6 +338,38 @@ class BookClasses{
             }
         }
 
+        public function getAllHistory($id,$type){
+
+            $query = "SELECT * FROM tbl_borrow WHERE userId='$id' AND userType='$type' AND status>0";
+
+            $result = $this->db->select($query);
+
+            if ($result) {
+                return $result;
+            }
+            else{
+
+                return false;
+
+            }
+        }
+
+        public function getAllissuedBook($id,$type){
+
+            $query = "SELECT * FROM tbl_borrow WHERE userId='$id' AND userType='$type' AND status=1";
+
+            $result = $this->db->select($query);
+
+            if ($result) {
+                return $result;
+            }
+            else{
+
+                return false;
+
+            }
+        }
+
 
         public function getAllAccepteddBooks(){
 

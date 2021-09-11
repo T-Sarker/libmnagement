@@ -3,19 +3,10 @@
   include "./classes/bookClass.php";
   $bk = new BookClasses();
 
-  $type =Session::get('Utype');
-  $id =Session::get('Uid');
-  $getBooks = $bk->borrowedBooks($id,$type);
-  
+ echo $type =Session::get('Utype');
+ echo $id =Session::get('Uid');
+  $getBooks = $bk->getAllHistory($id,$type);
 
-
-  if (isset($_GET['return']) && isset($_GET['id'])) {
-      
-      $borrowId =$_GET['id'];
-      $type =Session::get('Utype');
-      $uid =Session::get('Uid');
-      $returnReq = $bk->returnBook($borrowId,$uid,$type);
-  }
 ?>
 
 <div class="sidebar">
@@ -54,7 +45,8 @@
           
       ?>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Manage Book</span><i class="fas fa-chevron-down ms-3 fa-xs"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Manage Book</span><i
+            class="fas fa-chevron-down ms-3 fa-xs"></i></a>
         <ul class="submenu collapse">
           <li><a class="nav-link" href="addbook.php">Add Book</a></li>
         </ul>
@@ -161,14 +153,18 @@
                       <td><?php echo $today>$returndate2?$interval->d*20:0  ?></td>
                       <td>
                         <?php 
-                          if ($book['status']!=2) {
+                          if ($book['status']==1) {
                             
                         ?>
-                        <a href="?return=true&&id=<?php echo $book['id']; ?>"><span class="btn wishremove allitembtn">Return Now</span></a>
+                        <span class="btn wishremove allitembtn">Borrowed</span>
                         <?php  
                           }elseif($book['status']==2){ 
                         ?>
-                        <span class="btn allitembtn">Returned</span>
+                        <span class="btn allitembtn">Returnning</span>
+                        <?php
+                          }elseif($book['status']==3){ 
+                        ?>
+                        <span class="btn previewbtn">Returned</span>
                         <?php
                           }
                         ?>

@@ -1,4 +1,49 @@
 <?php include "./inc/header.php" ?>
+
+
+<?php
+  include "../classes/bookClass.php";
+  $bk = new BookClasses();
+  $getbk = $bk->getBooks();
+  print_r($getbk);
+
+  include "../classes/ebookClass.php";
+  $ebk = new EBookClasses();
+  $getebk = $ebk->getBooks();
+
+  include "../classes/assignmentClass.php";
+  $ac = new AssignmentClasses();
+  $assn = $ac->getAssignment();
+
+  include "../classes/videoClass.php";
+  $vk = new VideoClasses();
+  $getvd = $vk->getVideo();
+
+  include "../classes/journalClass.php";
+  $jk = new JournalClasses();
+  $getjk = $jk->getJournal();
+
+  include "../classes/reportClass.php";
+  $rk = new ReportClasses();
+  $getrk = $rk->getReport();
+
+  include "../classes/thisisClass.php";
+  $tk = new ThisisClasses();
+  $gettk = $tk->getThisis();
+
+
+
+  $getBooks = $bk->getBooks();
+
+  if ($_SERVER['REQUEST_METHOD']=="GET" && isset($_GET['delete'])) {
+
+    if ($_GET['delete']!=null) {
+        $editBookResult = $bk->deleteBookIntoDB($_GET['delete']);
+    } else {
+        echo "<script>window.location.href = '404.php';</script>";
+    }
+  }
+?>
 <div class="dashboadheader">
     <div class="dashnav">
       <div class="dashplace">
@@ -24,7 +69,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='booklist.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo mysqli_num_rows($getbk) ?></div>
                           <span>Book</span>
                         </div>
                         <div>
@@ -37,7 +82,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='ebooklist.html';">
                     <div class="listall">
                       <div>
-                        <div class="count">50</div>
+                        <div class="count"><?php echo mysqli_num_rows($getebk) ?></div>
                         <span>Ebook</span>
                       </div>
                       <div>
@@ -50,7 +95,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='journallist.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo mysqli_num_rows($getjk) ?></div>
                           <span>Journal</span>
                         </div>
                         <div>
@@ -63,7 +108,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='thesislist.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo mysqli_num_rows($gettk) ?></div>
                           <span>Thesis</span>
                         </div>
                         <div>
@@ -76,7 +121,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='assignmentlist.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo mysqli_num_rows($assn) ?></div>
                           <span>Assignment</span>
                         </div>
                         <div>
@@ -89,7 +134,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='reportlist.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo mysqli_num_rows($getrk) ?></div>
                           <span>Report</span>
                         </div>
                         <div>
@@ -102,7 +147,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='videolist.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo mysqli_num_rows($getvd) ?></div>
                           <span>Videos</span>
                         </div>
                         <div>

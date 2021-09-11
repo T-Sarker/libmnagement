@@ -3,19 +3,10 @@
   include "./classes/bookClass.php";
   $bk = new BookClasses();
 
-  $type =Session::get('Utype');
-  $id =Session::get('Uid');
-  $getBooks = $bk->borrowedBooks($id,$type);
-  
+ $type =Session::get('Utype');
+ $id =Session::get('Uid');
+ $getBooks = $bk->getAllissuedBook($id,$type);
 
-
-  if (isset($_GET['return']) && isset($_GET['id'])) {
-      
-      $borrowId =$_GET['id'];
-      $type =Session::get('Utype');
-      $uid =Session::get('Uid');
-      $returnReq = $bk->returnBook($borrowId,$uid,$type);
-  }
 ?>
 
 <div class="sidebar">
@@ -54,7 +45,8 @@
           
       ?>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Manage Book</span><i class="fas fa-chevron-down ms-3 fa-xs"></i></a>
+        <a class="nav-link" href="#"><i class="fas fa-book"></i><span>Manage Book</span><i
+            class="fas fa-chevron-down ms-3 fa-xs"></i></a>
         <ul class="submenu collapse">
           <li><a class="nav-link" href="addbook.php">Add Book</a></li>
         </ul>
@@ -63,6 +55,7 @@
           
         }
       ?>
+
       <li class="nav-item">
         <a class="nav-link" href="returnstatus.php" aria-current="page"><i class="fas fa-book-open"></i><span>All Request</span></a>
       </li>
@@ -115,7 +108,6 @@
             <th scope="col">Issue Date</th>
             <th scope="col">Expire Date</th>
             <th scope="col">Condition</th>
-            <th scope="col">Due</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -158,20 +150,9 @@
                       <td><?php echo $book['borrowDate']; ?></td>
                       <td><?php echo $returndate; ?></td>
                       <td><?php echo $today>$returndate2?'<span class="badge bg-danger">Expired</span>':'<span class="badge bg-success">Clean</span>'  ?></td>
-                      <td><?php echo $today>$returndate2?$interval->d*20:0  ?></td>
+                      
                       <td>
-                        <?php 
-                          if ($book['status']!=2) {
-                            
-                        ?>
-                        <a href="?return=true&&id=<?php echo $book['id']; ?>"><span class="btn wishremove allitembtn">Return Now</span></a>
-                        <?php  
-                          }elseif($book['status']==2){ 
-                        ?>
-                        <span class="btn allitembtn">Returned</span>
-                        <?php
-                          }
-                        ?>
+                      <span class="btn wishremove allitembtn">Booked</span>
                       </td>
 
                     </tr>
