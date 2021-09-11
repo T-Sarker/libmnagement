@@ -17,7 +17,7 @@
     <div class="landbottom">
         <div class="row justify-content-center">
               <div class="div1-background">
-                <div class="datehere">sunday, june 13, 2021</div>
+                <div class="datehere"><?php echo date("l"); ?>, <?php echo date("M") ?> <?php echo date("d") ?> <?php echo date("Y") ?></div>
                 </div>
              <div class="bottomop"></div>
         </div>

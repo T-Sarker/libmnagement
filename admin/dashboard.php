@@ -5,7 +5,7 @@
   include "../classes/bookClass.php";
   $bk = new BookClasses();
   $getbk = $bk->getBooks();
-  print_r($getbk);
+  
 
   include "../classes/ebookClass.php";
   $ebk = new EBookClasses();

@@ -13,7 +13,7 @@
         echo $parentId = $_POST['parentId'];
         
 
-        echo $insertMsg = $bk->insertMessage($to,$from,$msg,$parentId);
+        echo $insertMsg = $bk->insertMessage($to,$from,$msg,$parentId,$type);
     }
 
 ?>

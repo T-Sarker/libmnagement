@@ -12,6 +12,27 @@ class MessageClasses{
 			$this->fm = new Format();
 		}
 
+        public function getAllmessages(){
+
+            
+            $query = "SELECT * FROM tbl_message WHERE  ORDER BY id desc";
+
+            $result = $this->db->select($query);
+
+            if (!$result && mysqli_num_rows($result)<0) {
+                return false;
+            }elseif($result){
+                return $result;
+            }
+            else{
+
+                $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+
+                return $fieldError;
+
+            }
+        }
+
         public function getAllmessage($id){
 
             
@@ -99,16 +120,16 @@ class MessageClasses{
         }
 
 
-        public function insertMessage($to,$from,$msg,$parentId){
+        public function insertMessage($to,$from,$msg,$parentId,$type){
 
             $date = date("Y/m/d");
             
-            $query = "INSERT INTO tbl_message(fromId,toId,message,parrentId,timeStamp,seen) VALUES('$from','$to','$msg','$parentId','$date',0)";
+            $query = "INSERT INTO tbl_message(fromId,toId,message,parrentId,type,timeStamp,seen) VALUES('$from','$to','$msg','$parentId','$type','$date',0)";
             $result = $this->db->insert($query);
 
             if($result){
-
-                echo "<script>alert('alright')</script>";
+                echo "<script>window.location.href = 'allmessage.php';</script>";
+                
             }
             else{
 

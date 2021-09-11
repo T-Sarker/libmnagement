@@ -18,7 +18,7 @@
       </label>
       Book List
     </div>
-    <a class="nav-link" href="home.html"><i class="fas fa-home"></i> Home</a>
+    <a class="nav-link" href="/"><i class="fas fa-home"></i> Home</a>
   </div>
 
 
@@ -61,7 +61,7 @@
                     if ($tech['status']==0) {
                     
                   ?>
-                  <a class="btn btn-info" href="?id=<?php echo $tech['id'] ?>&& action=active">Active</a>
+                  <a class="btn btn-info" href="?id=<?php echo $tech['id'] ?>&& action=active">Approve</a>
                   <?php
                     
                     } else {

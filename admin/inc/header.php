@@ -121,7 +121,7 @@
 
                 
                 <li class="nav-item">
-                  <a class="nav-link" href="message.html"><i class="fas fa-envelope"></i><span>Messages</span></a>
+                  <a class="nav-link" href="allmessage.php"><i class="fas fa-envelope"></i><span>Messages</span></a>
                 </li>
               </ul>
 
