@@ -65,6 +65,12 @@
               </div>
             </div>
             <div class="row formpart">
+              <label for="dept" class="col-md-2 col-sm-12 col-form-label">Dept:</label>
+              <div class="col-md-8 col-sm-12">
+                <input type="text" class="form-control formclass" id="dept" name="dept" value="<?= isset($_POST['dept']) ? $book['dept'] : ''; ?>" required>
+              </div>
+            </div>
+            <div class="row formpart">
               <label for="author" class="col-md-2 col-sm-12 col-form-label">Author:</label>
               <div class="col-md-8 col-sm-12">
                 <input type="text" class="form-control formclass" id="author" name="author" value="<?= isset($book['author']) ? $book['author'] : ''; ?>" required>

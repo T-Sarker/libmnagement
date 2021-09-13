@@ -2,6 +2,12 @@
 
 
 <?php
+  include "../classes/borrowClass.php";
+  $brk = new BorrowClass();
+
+  include "../classes/userListClass.php";
+  $ulk = new UserListClasses();
+
   include "../classes/bookClass.php";
   $bk = new BookClasses();
   $getbk = $bk->getBooks();
@@ -66,7 +72,7 @@
             <h3>Resource List</h3>
             <div class="row">
 
-                  <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='booklist.html';">
+                  <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='booklist.php';">
                       <div class="listall">
                         <div>
                           <div class="count"><?php echo mysqli_num_rows($getbk) ?></div>
@@ -190,7 +196,24 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php 
+                            $st = $ulk->pendingUserList('Student');
+                            $tt = $ulk->pendingUserList('Teacher');
+
+                            if ($st != false) {
+                              $sCount = mysqli_num_rows($st);
+                            }else{
+                              $sCount=0;
+                            }
+
+                            if ($tt != false) {
+                              $tCount = mysqli_num_rows($tt);
+                            }else{
+                              $tCount=0;
+                            }
+
+                            echo  $sCount+ $tCount
+                          ?></div>
                           <span>Users</span>
                         </div>
                         <div>
@@ -200,23 +223,11 @@
                         </div>
                       </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='returnrequest.html';">
-                      <div class="listall">
-                        <div>
-                          <div class="count">50</div>
-                          <span>Due Charge</span>
-                        </div>
-                        <div>
-                          <span class="demoicon">
-                            <img src="../img/due-charge.png" alt="" srcset="">
-                          </span>
-                        </div>
-                      </div>
-                  </div>
+                  
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='issuerequest.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo $brk->borrowedRequest() ?></div>
                           <span>Issue Request</span>
                         </div>
                         <div>
@@ -229,7 +240,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='borrowed.html';">
                     <div class="listall">
                       <div>
-                        <div class="count">50</div>
+                        <div class="count"><?php echo $brk->borrowedRequestAccepted() ?></div>
                         <span>Borrowed</span>
                       </div>
                       <div>
@@ -242,7 +253,7 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='returnrequest.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
+                          <div class="count"><?php echo $brk->returnRequest() ?></div>
                           <span>Return Request</span>
                         </div>
                         <div>
@@ -255,8 +266,8 @@
                   <div class="col-lg-4 col-md-6 col-xs-12" onclick="location.href='requestedbook.html';">
                       <div class="listall">
                         <div>
-                          <div class="count">50</div>
-                          <span>Requested Book</span>
+                          <div class="count"><?php echo $brk->returnRequestAccepted() ?></div>
+                          <span>Returned Book</span>
                         </div>
                         <div>
                           <span class="demoicon">

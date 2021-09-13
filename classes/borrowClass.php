@@ -50,5 +50,66 @@ class BorrowClass{
     }
 
 
+    public function borrowedRequest()
+    {
+        $query = "SELECT * FROM tbl_borrow WHERE forDays=0 AND status=0";
+        $result = $this->db->select($query);
+
+        if (!$result) {
+            return 0;
+        } else {
+            $c = mysqli_num_rows($result);
+            return $c;
+        }
+        
+
+    }
+
+    public function borrowedRequestAccepted()
+    {
+        $query = "SELECT * FROM tbl_borrow WHERE forDays>0 AND status=1";
+        $result = $this->db->select($query);
+
+        if (!$result) {
+            return 0;
+        } else {
+            $c = mysqli_num_rows($result);
+            return $c;
+        }
+        
+
+    }
+
+    public function returnRequest()
+    {
+        $query = "SELECT * FROM tbl_borrow WHERE forDays>0 AND status=2";
+        $result = $this->db->select($query);
+
+        if (!$result) {
+            return 0;
+        } else {
+            $c = mysqli_num_rows($result);
+            return $c;
+        }
+        
+
+    }
+
+    public function returnRequestAccepted()
+    {
+        $query = "SELECT * FROM tbl_borrow WHERE forDays>0 AND status=3";
+        $result = $this->db->select($query);
+
+        if (!$result) {
+            return 0;
+        } else {
+            $c = mysqli_num_rows($result);
+            return $c;
+        }
+        
+
+    }
+
+
 }
 ?>

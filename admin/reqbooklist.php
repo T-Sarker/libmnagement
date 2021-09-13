@@ -6,9 +6,10 @@
 
   if ($_SERVER['REQUEST_METHOD']=="POST" && isset($_POST['borrowGrant'])) {
     $id = $_POST['id'];    
+    $bid = $_POST['bid'];    
     $days = $_POST['days'];    
     $type =Session::get('Utype');    
-    $updateBorrowReq = $bk->updateTheBorrowRequest($id,$days,$type);
+    $updateBorrowReq = $bk->updateTheBorrowRequest($id,$bid,$days,$type);
   }
 
 ?>
@@ -78,6 +79,7 @@
                                 <div class="col">
                                     <input type="number" class="form-control" name="days" placeholder="3">
                                     <input type="hidden" name="id" value="<?php echo $book['userId'] ?>">
+                                    <input type="hidden" name="bid" value="<?php echo $book['id'] ?>">
                                 </div>
                                 <div class="col">
                                     <button type="submit" style="float: left;padding: 0px 12px;" name="borrowGrant"><i

@@ -39,7 +39,7 @@
                     $userlist = $bk->getAllRequestedUserDetails($msg['fromId'],$msg['type']);
                     while ($list = $userlist->fetch_assoc()) {
                 ?>
-            <li class="list-group-item"><?php echo $list['name']; ?></li>
+            <li class="list-group-item p-4 mb-3"><a href="message.php?id=<?php echo $list['id']; ?>&&type=<?php echo $msg['type']; ?>"><?php echo $list['name']; ?></a></li>
             <?php
                     }
                 }

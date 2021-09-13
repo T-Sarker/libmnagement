@@ -22,6 +22,9 @@ class BookClasses{
             $category = $this->fm->validator($post['category']);
 			$category= mysqli_real_escape_string($this->db->link,$category);
 
+            $dept = $this->fm->validator($post['dept']);
+			$dept= mysqli_real_escape_string($this->db->link,$dept);
+
             $author = $this->fm->validator($post['author']);
 			$author= mysqli_real_escape_string($this->db->link,$author);
 
@@ -51,7 +54,7 @@ class BookClasses{
 
             $userFrom = $user=='Teacher'? $user:'Admin';
 
-            if (empty($title) || empty($category) || empty($author) || empty($bookid) || empty($numberofcopy) || empty($Edition) || empty($description) || empty($publisher) || empty($isbn) || empty($releaseDate)) {
+            if (empty($title) || empty($category) || empty($author) || empty($dept) || empty($bookid) || empty($numberofcopy) || empty($Edition) || empty($description) || empty($publisher) || empty($isbn) || empty($releaseDate)) {
 
                 $fieldError = "<span style='color:red;text-align: center;display: block;'>Fields Must Not Be Empty!!</span>";
 
@@ -77,7 +80,7 @@ class BookClasses{
                 } else {
                     $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
                     
-                    $query = "INSERT INTO tbl_book(title,type,author,bookid,quantity,edition,description,publisher,isbn,releaseDate,image,status,addedBy) VALUES('$title','$category','$author','$bookid','$numberofcopy','$Edition','$description','$publisher','$isbn','$releaseDate','$uploadPath',0,'$userFrom')";
+                    $query = "INSERT INTO tbl_book(title,type,dept,author,bookid,quantity,edition,description,publisher,isbn,releaseDate,image,status,addedBy) VALUES('$title','$category','$dept','$author','$bookid','$numberofcopy','$Edition','$description','$publisher','$isbn','$releaseDate','$uploadPath',0,'$userFrom')";
 
                     $result = $this->db->insert($query);
                     if ($result && $didUpload && $result != false) {
@@ -162,6 +165,9 @@ class BookClasses{
             $category = $this->fm->validator($post['category']);
 			$category= mysqli_real_escape_string($this->db->link,$category);
 
+            $dept = $this->fm->validator($post['dept']);
+			$dept= mysqli_real_escape_string($this->db->link,$dept);
+
             $author = $this->fm->validator($post['author']);
 			$author= mysqli_real_escape_string($this->db->link,$author);
 
@@ -189,7 +195,7 @@ class BookClasses{
             $user = $this->fm->validator($post['user']);
 			$user= mysqli_real_escape_string($this->db->link,$user);
 
-            if (empty($title) || empty($category) || empty($author) || empty($bookid) || empty($numberofcopy) || empty($Edition) || empty($description) || empty($publisher) || empty($isbn) || empty($releaseDate)) {
+            if (empty($title) || empty($category) || empty($dept) || empty($author) || empty($bookid) || empty($numberofcopy) || empty($Edition) || empty($description) || empty($publisher) || empty($isbn) || empty($releaseDate)) {
 
                 $fieldError = "<span style='color:red;text-align: center;display: block;'>Fields Must Not Be Empty!!</span>";
 
@@ -211,6 +217,7 @@ class BookClasses{
             if ($fileName=='') {
                 $query = "UPDATE tbl_book SET	title ='$title',
 			            							type='$category',
+			            							dept ='$dept',
 			            							author ='$author',
 			            							bookid ='$bookid',
 			            							quantity ='$numberofcopy',
@@ -252,6 +259,7 @@ class BookClasses{
                     
                     $query = "UPDATE tbl_book SET	title ='$title',
 			            							type='$category',
+                                                    dept ='$dept',
 			            							author ='$author',
 			            							bookid ='$bookid',
 			            							quantity ='$numberofcopy',
@@ -393,6 +401,8 @@ class BookClasses{
                 $query = "SELECT * FROM tbl_student WHERE id='$id'";
             } elseif ($type=='Teacher') {
                 $query = "SELECT * FROM tbl_teacher WHERE id='$id'";
+            }else {
+                echo "<script>alert(".$type.")</script>";
             }
 
             $result = $this->db->select($query);
@@ -429,10 +439,10 @@ class BookClasses{
             }
         }
 
-        public function updateTheBorrowRequest($id,$days,$type){
+        public function updateTheBorrowRequest($id,$bid,$days,$type){
 
             $date =  date("Y/m/d");
-            $query = "UPDATE tbl_borrow SET borrowDate='$date', forDays='$days', status=1 WHERE userId='$id' AND userType='$type'";
+            $query = "UPDATE tbl_borrow SET borrowDate='$date', forDays='$days', status=1 WHERE userId='$id' AND userType='$type' AND id='$bid'";
             $result = $this->db->update($query);
 
             if ($result) {
@@ -493,7 +503,7 @@ class BookClasses{
         $query = "SELECT * FROM tbl_borrow WHERE status=2";
         $result = $this->db->select($query);
 
-        if (mysqli_num_rows($result)==0) {
+        if (!$result || mysqli_num_rows($result)==0) {
             return false;
         }elseif(mysqli_num_rows($result)>0){
             return $result;

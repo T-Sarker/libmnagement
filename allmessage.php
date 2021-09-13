@@ -103,40 +103,44 @@
 
     <h3 class="start">Start Conversation</h3>
     <div class="texthereall">
-      <ul>
-        <?php
-          if (isset($getMessages) && $getMessages!=false) {
-            while ($msg = $getMessages->fetch_assoc()) {
-              $GLOBALS['z']=$msg['id'];
-        ?>
-                  <li class="openmessagetake" style="padding:10px;margin-bottom:5px;">
+    <ul>
+            <?php
+                if (isset($getMessages) && $getMessages!=false) {
+                    
+                    while ($msg=$getMessages->fetch_assoc()) {
+                      $GLOBALS['z'] =$msg['parrentId']
+                        
+            ?>
+            <?php
+                if ($msg['fromId']==$id) {
+            ?>
+                <li style="text-align:left;margin: 12px 10px;padding: 15px;border-bottom: 1px solid #ece8e8;">
                     <p><?php echo $msg['message'] ?></p>
+                    <?php echo $msg['toId']==0?'<span style="font-size:12px;color: #3d3d3c7d;">(me) </span>':''; ?>
                     <span style="font-size:12px;color: #3d3d3c7d;"><?php echo $msg['timeStamp'] ?></span>
-                  </li>
-        <?php
-
-                $mid = $msg['id'];
-                $getSubmsg = $bk->getAllSubmessage($id,$mid);
-                if ($getSubmsg && $getSubmsg!=false) {
-                  while ($submsg = $getSubmsg->fetch_assoc()) {
-        ?>
-                <li class="openmessagetake" style="background:#c3c1c1;text-align:right;padding:10px;margin-bottom:5px;">
-                  <p><?php echo $submsg['message'] ?></p>
-                  <span style="font-size:12px;color: #3d3d3c7d;"><?php echo $submsg['timeStamp'] ?></span>
                 </li>
-
-        <?php
-              }
-            }
+            <?php
+                } else {
+            ?>
+                <li style="text-align:right;background:#DFD9D9;margin: 12px 10px;padding: 15px;border-bottom: 1px solid #ece8e8;">
+                    <p><?php echo $msg['message'] ?></p>
+                    <?php echo $msg['toId']==0?'<span style="font-size:12px;color: #3d3d3c7d;">(me) </span>':''; ?>
+                    <span style="font-size:12px;color: #3d3d3c7d;"><?php echo $msg['timeStamp'] ?></span>
+                </li>
+            <?php
+                    
+                }
+                
+            ?>
             
-        ?>
-          
-      </ul>
-    </div>
-    <?php
-                      }
+            
+            <?php
+                
                     }
-                  ?>
+                }
+            ?>
+        </ul>
+    </div>
 
     <div class="typesend">
       <form action="" method="POST">

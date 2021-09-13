@@ -37,6 +37,26 @@ class UserListClasses{
             }
         }
 
+		public function pendingUserList($type){
+
+            $type = $this->fm->validator($type);
+            $type= mysqli_real_escape_string($this->db->link,$type);
+    
+            if ($type=='Student') {
+                $query = "SELECT * FROM tbl_student WHERE status=0";
+            } elseif ($type=='Teacher') {
+                $query = "SELECT * FROM tbl_teacher WHERE status=0";
+            }
+    
+            $result = $this->db->select($query);
+            
+            if ($result) {
+                return $result;
+            }else{
+                return false;
+            }
+        }
+
         public function userStatusUpdate($id,$action,$type){
 
             $id = $this->fm->validator($id);
