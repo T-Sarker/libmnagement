@@ -123,6 +123,10 @@
                 <li class="nav-item">
                   <a class="nav-link" href="allmessage.php"><i class="fas fa-envelope"></i><span>Messages</span></a>
                 </li>
+                
+                <li class="nav-item">
+                  <a class="nav-link" href="?action=logout"><i class="fas fa-user"></i><span>Logout</span></a>
+                </li>
               </ul>
 
         </div>
