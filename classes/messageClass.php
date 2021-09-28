@@ -72,9 +72,9 @@ class MessageClasses{
             }
             else{
 
-                $fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
+                //$fieldError = "<span style='color:red;text-align: center;display: block;'>Requests couldn't be Found!!</span>";
 
-                return $fieldError;
+                return false;
 
             }
         }
