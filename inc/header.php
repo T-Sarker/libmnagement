@@ -96,7 +96,7 @@
                       The Library Has Collections Of 1000+ Materials Including Videos, Research Paper, Journal And Many
                       More. New Item Also Been Adding Sequentially. To Access Full Power Of Gono Bishwabidyalay Online
                       Library.</br>
-                      Please <a href="login.html" class="log">Login</a> Or <a href="chooseregister.html"
+                      Please <a href="register.php"
                         class="sign">Sign Up</a>
                     </li>
                     <?php
@@ -118,7 +118,17 @@
                   </ul>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#askLibrarian" href="">Ask Librarian</a>
+                  <?php
+                      if (Session::get('Ulogin') ==false && Session::get('Utype') == '') {
+                  ?>
+                  <a class="nav-link"  href="register.php">Ask Librarian</a>
+                  <?php
+                        }else{
+                    ?>
+                  <a class="nav-link"  href="allmessage.php">Ask Librarian</a>
+                  <?php
+                        }
+                    ?>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="staffall.html" tabindex="-1" aria-disabled="true">Staff</a>
@@ -129,9 +139,21 @@
                   </a>
                 </li>
                 <div class="signlogup">
-                  <a href="chooseregister.html">Sign Up</a>
+                  <a href="register.php">Sign Up</a>
                   /
-                  <a href="login.html">Log In</a>
+                  <ul>
+                  <li class="nav-item">
+                  <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false" style="padding:0">Login</a>
+                  <ul class="dropdown-menu" style="left: 88%; margin:0;">
+                    <li><a class="dropdown-item" href="login.php?type=Student">As Student</a></li>
+                    <li>
+                      <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="login.php?type=Teacher">As Teacher</a></li>
+                  </ul>
+                </li>
+                </ul>
                 </div>
 
               </ul>
