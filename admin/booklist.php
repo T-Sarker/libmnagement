@@ -7,7 +7,9 @@
   if ($_SERVER['REQUEST_METHOD']=="GET" && isset($_GET['delete'])) {
 
     if ($_GET['delete']!=null) {
-        $editBookResult = $bk->deleteBookIntoDB($_GET['delete']);
+
+        $id = $_GET['delete'];
+        $editBookResult = $bk->deleteBookIntoDB($id);
     } else {
         echo "<script>window.location.href = '404.php';</script>";
     }

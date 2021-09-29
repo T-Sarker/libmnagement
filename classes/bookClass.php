@@ -296,9 +296,9 @@ class BookClasses{
 
         public function deleteBookIntoDB($id){
 
-            $query = "DELETE FROM tbl_book WHERE id=$id";
+            $query = "DELETE FROM tbl_book WHERE id='$id'";
 
-            $result = $this->db->select($query);
+            $result = $this->db->delete($query);
 
             if ($result) {
                 echo "<script>window.location.href = 'booklist.php';</script>";
